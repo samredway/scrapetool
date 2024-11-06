@@ -2,6 +2,10 @@
 
 This is a web app that let you scrape websites for text data. There is a frontend allowing you to test a given url and prompt and see the results, as well as an api that allows you to do the same thing programatically.
 
+Here's a screenshot of the initial POC:
+
+![Scrape Tool Interface](docs/Screenshot_Initial_POC.png)
+
 The fundamental aim here is to create a tool that allows you to scrape websites for textual and other data by entering a plain english prompt and a url. The tool uses powerful LLMs to parse and extract the data, meaning someone with no technical knowledge can scrape any website.
 
 ## Licence
