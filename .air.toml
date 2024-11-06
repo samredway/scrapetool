@@ -1,0 +1,8 @@
+[build]
+cmd = "go build -o ./tmp/main ./cmd/main.go"
+bin = "./tmp/main"
+full_bin = "cd ./ && APP_ENV=dev APP_USER=air ./tmp/main"
+include_ext = ["go", "tpl", "html"]
+exclude_dir = ["assets", "tmp", "vendor"]
+exclude_file = ["*_test.go"]
+delay = 1000
