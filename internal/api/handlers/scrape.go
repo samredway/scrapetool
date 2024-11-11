@@ -5,7 +5,6 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
-	"github.com/samredway/scrapeai/scraping"
 	"github.com/samredway/scrapetool/internal/api/types"
 )
 
@@ -18,11 +17,7 @@ func HandleScrape(c *fiber.Ctx) error {
 		})
 	}
 
-	data, err := scrapeai.Scrape(scrapeai.ScrapeAiRequest{
-		Url:       req.URL,
-		Prompt:    req.Prompt,
-		FetchFunc: scraping.Fetch,
-	})
+	data, err := scrapeai.Scrape(scrapeai.NewScrapeAiRequest(req.URL, req.Prompt))
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
