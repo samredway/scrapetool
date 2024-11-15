@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"log/slog"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/types"
@@ -14,6 +16,13 @@ func HandleScrape(c *fiber.Ctx) error {
 			"error": "Invalid request format",
 		})
 	}
+
+	slog.Info(
+		"Scrape request",
+		"url", req.URL,
+		"prompt", req.Prompt,
+		"responseStructure", req.ResponseStructure,
+	)
 
 	data, err := scrapeai.Scrape(scrapeai.NewScrapeAiRequest(req.URL, req.Prompt))
 
