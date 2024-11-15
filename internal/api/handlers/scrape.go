@@ -24,7 +24,13 @@ func HandleScrape(c *fiber.Ctx) error {
 		"responseStructure", req.ResponseStructure,
 	)
 
-	data, err := scrapeai.Scrape(scrapeai.NewScrapeAiRequest(req.URL, req.Prompt))
+	data, err := scrapeai.Scrape(
+		scrapeai.NewScrapeAiRequest(
+			req.URL,
+			req.Prompt,
+			scrapeai.WithSchema(req.ResponseStructure),
+		),
+	)
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
