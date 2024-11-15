@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"strings"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/types"
@@ -26,9 +24,9 @@ func HandleScrape(c *fiber.Ctx) error {
 	}
 
 	response := types.ScrapeResponse{
-		Results: strings.Join(data.Results, "\n"),
 		URL:     req.URL,
 		Prompt:  req.Prompt,
+		Results: data.Results.(string),
 	}
 
 	return c.JSON(response)
