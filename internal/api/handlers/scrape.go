@@ -3,10 +3,13 @@ package handlers
 import (
 	"log/slog"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/types"
 )
+
+var validate = validator.New()
 
 func HandleScrape(c *fiber.Ctx) error {
 	var req types.ScrapeRequest
@@ -19,10 +22,18 @@ func HandleScrape(c *fiber.Ctx) error {
 
 	slog.Info(
 		"Scrape request",
-		"url", req.URL,
-		"prompt", req.Prompt,
-		"responseStructure", req.ResponseStructure,
+		"url:", req.URL,
+		"prompt:", req.Prompt,
+		"responseStructure:", req.ResponseStructure,
 	)
+
+	err := validate.Struct(req)
+	if err != nil {
+		slog.Error("Invalid request", "error", err.Error())
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
 
 	data, err := scrapeai.Scrape(
 		scrapeai.NewScrapeAiRequest(
