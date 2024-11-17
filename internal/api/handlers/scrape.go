@@ -60,6 +60,7 @@ func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
 	)
 
 	if err != nil {
+		slog.Error("Error scraping", "error", err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
