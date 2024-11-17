@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/handlers"
 )
 
@@ -11,7 +12,7 @@ func SetupRoutes(app *fiber.App) {
 		return c.Render("index", fiber.Map{})
 	})
 
-	// data api
+	// api endpoints
 	api := app.Group("/api/v1")
-	api.Post("/scrape", handlers.HandleScrape)
+	api.Post("/scrape", handlers.NewScrapeHandler(scrapeai.Scrape).HandleScrape)
 }

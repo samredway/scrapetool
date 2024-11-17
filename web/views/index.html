@@ -29,6 +29,39 @@
                     <textarea name="prompt" placeholder="Example: Extract all the text from the body of the page"
                         class="form-control" rows="4"></textarea>
                 </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="specifyResponseStructure">
+                    <label class="form-check-label" for="specifyResponseStructure">Specify response structure</label>
+                </div>
+
+                <div class="mb-3" id="responseStructureSection" style="display: none;">
+                    <p>
+                        Advanced users can specify a JSON string to define the response structure.
+                        For example the default response (shown below) is an array of strings.
+                    </p>
+                    <p>
+                        This tool uses github.com/samredway/scrapeai under the hood.
+                        For more information on the response structure, see the
+                        docs here: <a href="https://github.com/samredway/scrapeai">ScrapeAi</a>
+                    </p>
+                    <pre class="bg-light p-2 rounded">
+{
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {"type": "string"}
+        }
+    },
+    "additionalProperties": false,
+    "required": ["data"]
+}
+                    </pre>
+                    <textarea name="responseStructure" placeholder="Enter JSON response structure here"
+                        class="form-control" rows="10" style="overflow: hidden;"></textarea>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Scrape</button>
             </form>
         </div>

@@ -1,10 +1,10 @@
-export async function scrapeUrl(url, prompt) {
+export async function scrapeUrl(url, prompt, responseStructure) {
     const response = await fetch('/api/v1/scrape', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ url, prompt })
+        body: JSON.stringify({ url, prompt, responseStructure })
     });
 
     if (!response.ok) {

@@ -1,8 +1,9 @@
 package types
 
 type ScrapeRequest struct {
-	URL    string `json:"url" validate:"required,url"`
-	Prompt string `json:"prompt" validate:"required,min=10,max=3000"`
+	URL               string `json:"url" validate:"required,url"`
+	Prompt            string `json:"prompt" validate:"required,min=10,max=3000"`
+	ResponseStructure string `json:"responseStructure"`
 }
 
 type ScrapeResponse struct {
