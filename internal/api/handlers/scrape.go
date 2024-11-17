@@ -11,19 +11,22 @@ import (
 
 var validate = validator.New()
 
+// ScrapeFunc is a function that scrapes a URL and returns a ScrapeAiResult
 type ScrapeFunc func(*scrapeai.ScrapeAiRequest) (*scrapeai.ScrapeAiResult, error)
 
+// ScrapeHandler allows passing in a scraper function as a dependency injection
 type ScrapeHandler struct {
 	scrapeFunc ScrapeFunc
 }
 
+// NewScrapeHandler creates a new ScrapeHandler with a given scrape function
 func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
 	return &ScrapeHandler{
 		scrapeFunc: scrapeFunc,
 	}
 }
 
-// HandleScrape is now a method on ScrapeHandler
+// HandleScrape is the handler for the scrape endpoint
 func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
 	var req types.ScrapeRequest
 

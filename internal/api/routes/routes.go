@@ -7,9 +7,6 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-	// Initialize handlers with their specific dependencies
-	scrapeHandler := handlers.NewScrapeHandler(scrapeai.Scrape)
-
 	// Serve html templates
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{})
@@ -17,5 +14,5 @@ func SetupRoutes(app *fiber.App) {
 
 	// api endpoints
 	api := app.Group("/api/v1")
-	api.Post("/scrape", scrapeHandler.HandleScrape)
+	api.Post("/scrape", handlers.NewScrapeHandler(scrapeai.Scrape).HandleScrape)
 }
