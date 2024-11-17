@@ -11,7 +11,20 @@ import (
 
 var validate = validator.New()
 
-func HandleScrape(c *fiber.Ctx) error {
+type ScrapeFunc func(*scrapeai.ScrapeAiRequest) (*scrapeai.ScrapeAiResult, error)
+
+type ScrapeHandler struct {
+	scrapeFunc ScrapeFunc
+}
+
+func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
+	return &ScrapeHandler{
+		scrapeFunc: scrapeFunc,
+	}
+}
+
+// HandleScrape is now a method on ScrapeHandler
+func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
 	var req types.ScrapeRequest
 
 	if err := c.BodyParser(&req); err != nil {
@@ -35,7 +48,7 @@ func HandleScrape(c *fiber.Ctx) error {
 		})
 	}
 
-	data, err := scrapeai.Scrape(
+	data, err := h.scrapeFunc(
 		scrapeai.NewScrapeAiRequest(
 			req.URL,
 			req.Prompt,

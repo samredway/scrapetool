@@ -7,13 +7,25 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/samredway/scrapeai/scrapeai"
 )
 
 func TestHandleScrape(t *testing.T) {
+	// Create a mock scrape function
+	mockScrape := func(req *scrapeai.ScrapeAiRequest) (*scrapeai.ScrapeAiResult, error) {
+		return &scrapeai.ScrapeAiResult{
+			Results: "mocked result",
+		}, nil
+	}
+
+	// Create a new handler with the mock function
+	handler := NewScrapeHandler(mockScrape)
+
+	// Create a new fiber app for testing
 	app := fiber.New()
 
-	// Define a route for testing
-	app.Post("/scrape", HandleScrape)
+	// Setup the route with the handler method
+	app.Post("/scrape", handler.HandleScrape)
 
 	tests := []struct {
 		name       string
