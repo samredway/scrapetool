@@ -53,7 +53,7 @@ func TestHandleScrape(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			req := httptest.NewRequest("POST", "/scrape", bytes.NewBufferString(tt.payload))
 			req.Header.Set("Content-Type", "application/json")
-			resp, err := app.Test(req, 10000)
+			resp, err := app.Test(req)
 			if err != nil {
 				t.Errorf("Error getting response %v", err)
 			}
