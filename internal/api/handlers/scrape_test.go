@@ -25,7 +25,7 @@ func TestHandleScrape(t *testing.T) {
 	app := fiber.New()
 
 	// Setup the route with the handler method
-	app.Post("/scrape", handler.HandleScrape)
+	app.Post("/scrape", handler.Scrape)
 
 	tests := []struct {
 		name       string
