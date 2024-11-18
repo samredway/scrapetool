@@ -28,30 +28,16 @@ func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
 
 // Scrape is carries out the scraping process
 func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
-	var req types.ScrapeRequest
-
-	if err := c.BodyParser(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid request format",
-		})
-	}
-
-	err := validate.Struct(req)
+	req, err := h.parseAndValidateRequest(c)
 	if err != nil {
-		slog.Error("Invalid request", "error", err.Error())
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
-		})
+		return err
 	}
 
-	data, err := h.scrapeFunc(
-		scrapeai.NewScrapeAiRequest(
-			req.URL,
-			req.Prompt,
-			scrapeai.WithSchema(req.ResponseStructure),
-		),
-	)
-
+	result, err := h.scrapeFunc(scrapeai.NewScrapeAiRequest(
+		req.URL,
+		req.Prompt,
+		scrapeai.WithSchema(req.ResponseStructure),
+	))
 	if err != nil {
 		slog.Error("Error scraping", "error", err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -59,11 +45,28 @@ func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
 		})
 	}
 
-	response := types.ScrapeResponse{
+	return c.JSON(types.ScrapeResponse{
 		URL:     req.URL,
 		Prompt:  req.Prompt,
-		Results: data.Results,
+		Results: result.Results,
+	})
+}
+
+func (h *ScrapeHandler) parseAndValidateRequest(c *fiber.Ctx) (types.ScrapeRequest, error) {
+	var req types.ScrapeRequest
+
+	if err := c.BodyParser(&req); err != nil {
+		return req, c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "Invalid request format",
+		})
 	}
 
-	return c.JSON(response)
+	if err := validate.Struct(req); err != nil {
+		slog.Error("Invalid request", "error", err.Error())
+		return req, c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return req, nil
 }
