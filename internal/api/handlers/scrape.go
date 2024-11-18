@@ -26,8 +26,8 @@ func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
 	}
 }
 
-// HandleScrape is the handler for the scrape endpoint
-func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
+// Scrape is carries out the scraping process
+func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
 	var req types.ScrapeRequest
 
 	if err := c.BodyParser(&req); err != nil {
@@ -35,13 +35,6 @@ func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
 			"error": "Invalid request format",
 		})
 	}
-
-	slog.Info(
-		"Scrape request",
-		"url:", req.URL,
-		"prompt:", req.Prompt,
-		"responseStructure:", req.ResponseStructure,
-	)
 
 	err := validate.Struct(req)
 	if err != nil {
@@ -69,7 +62,7 @@ func (h *ScrapeHandler) HandleScrape(c *fiber.Ctx) error {
 	response := types.ScrapeResponse{
 		URL:     req.URL,
 		Prompt:  req.Prompt,
-		Results: data.Results.(string),
+		Results: data.Results,
 	}
 
 	return c.JSON(response)

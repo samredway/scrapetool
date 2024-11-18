@@ -14,5 +14,5 @@ func SetupRoutes(app *fiber.App) {
 
 	// api endpoints
 	api := app.Group("/api/v1")
-	api.Post("/scrape", handlers.NewScrapeHandler(scrapeai.Scrape).HandleScrape)
+	api.Post("/scrape", handlers.NewScrapeHandler(scrapeai.Scrape).Scrape)
 }
