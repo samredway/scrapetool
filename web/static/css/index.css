@@ -1,10 +1,14 @@
-body .container {
-    max-width: 800px !important;
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
+/* More specific selector to override Bootstrap */
+html body .container,
+html body div.container {
+    max-width: 1000px !important;
+    margin: 2rem auto !important;
+    width: 100% !important;
 }
 
-.container .form-container {
+/* Common styling for all form containers */
+.form-container,
+.email-signup-container {
     border: 1px solid #dee2e6;
     border-radius: 8px;
     padding: 1.5rem;
@@ -12,16 +16,41 @@ body .container {
     background-color: #f8f9fa;
 }
 
-.container .results-container {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 1.5rem;
+/* Results container */
+.results-container {
+    width: 100%;
+    padding: 0;
 }
 
-.container #scrapeResult {
-    border: 1px solid #dee2e6;
-    background-color: white;
+.card-body {
+    width: 100%;
+    min-width: 100%;
+}
+
+/* Results display */
+#scrapeResult {
     max-height: 500px;
     overflow-y: auto;
     white-space: pre-wrap;
+    border: 1px solid #dee2e6;
+    padding: 1rem !important;
+    margin: 0;
+}
+
+/* Common styling for both buttons */
+#scrapeForm button,
+#emailForm button {
+    padding: 0.4rem 1rem;
+    font-size: 1.1rem;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    height: 40px;
+    white-space: nowrap;
+}
+
+/* Optional hover state for both buttons */
+#scrapeForm button:hover,
+#emailForm button:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
 }
