@@ -9,6 +9,8 @@ import (
 	"github.com/samredway/scrapetool/internal/api/types"
 )
 
+// TODO doesnt really belong here. Should I have a validate package or is
+// this a dependency?
 var validate = validator.New()
 
 // ScrapeFunc is a function that scrapes a URL and returns a ScrapeAiResult
@@ -26,18 +28,26 @@ func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
 	}
 }
 
-// Scrape is carries out the scraping process
+// Scrape calles underlying scrapeai Scrape function to collect return data
 func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
 	req, err := h.parseAndValidateRequest(c)
 	if err != nil {
 		return err
 	}
 
-	result, err := h.scrapeFunc(scrapeai.NewScrapeAiRequest(
+	saReq, err := scrapeai.NewScrapeAiRequest(
 		req.URL,
 		req.Prompt,
 		scrapeai.WithSchema(req.ResponseStructure),
-	))
+	)
+	if err != nil {
+		slog.Error("Error creating scrapeai request", "error", err.Error())
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	result, err := h.scrapeFunc(saReq)
 	if err != nil {
 		slog.Error("Error scraping", "error", err.Error())
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

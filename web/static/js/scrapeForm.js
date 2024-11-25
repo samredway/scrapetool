@@ -17,7 +17,6 @@ export class ScrapeForm {
     }
 
     toggleResponseStructureSection() {
-        console.log('toggleResponseStructureSection', this.specifyResponseStructureCheckbox.checked);
         if (this.specifyResponseStructureCheckbox.checked) {
             this.responseStructureSection.style.display = 'block';
         } else {
@@ -42,13 +41,14 @@ export class ScrapeForm {
             return;
         }
 
+        this.showLoading();
+
         try {
-            this.showLoading();
             const results = await scrapeUrl(url, prompt, responseStructure);
             this.showResults(results);
         } catch (error) {
-            console.error('Error:', error);
-            this.showError('An error occurred while scraping the content.');
+            this.showError(`${error}`);
+            return;
         }
     }
 

@@ -8,7 +8,8 @@ export async function scrapeUrl(url, prompt, responseStructure) {
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const error = await response.json();
+        throw new Error(`${error["error"]}`);
     }
 
     const data = await response.json();

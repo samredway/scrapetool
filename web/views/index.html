@@ -46,7 +46,13 @@
                         docs here: <a href="https://github.com/samredway/scrapeai">ScrapeAi</a>
                     </p>
                     <pre class="bg-light p-2 rounded">
-{
+
+                    </pre>
+                    <textarea name="responseStructure" class="form-control" rows="12"
+                        spellcheck="false"
+                        data-language="json"
+                        onkeydown="handleTab(event)"
+                        style="overflow: auto; tab-size: 4; -moz-tab-size: 4; font-family: monaco, monospace;">{
     "type": "object",
     "properties": {
         "data": {
@@ -56,10 +62,7 @@
     },
     "additionalProperties": false,
     "required": ["data"]
-}
-                    </pre>
-                    <textarea name="responseStructure" placeholder="Enter JSON response structure here"
-                        class="form-control" rows="12" style="overflow: auto;"></textarea>
+}</textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Scrape</button>
@@ -76,6 +79,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function handleTab(e) {
+        if (e.key == 'Tab') {
+            e.preventDefault();
+            
+            // Get cursor position
+            var start = e.target.selectionStart;
+            var end = e.target.selectionEnd;
+
+            // Insert 4 spaces
+            e.target.value = e.target.value.substring(0, start) + "    " + e.target.value.substring(end);
+            
+            // Put cursor after the inserted spaces
+            e.target.selectionStart = e.target.selectionEnd = start + 4;
+        }
+    }
+    </script>
 </body>
 
 </html>
