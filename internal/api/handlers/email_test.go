@@ -6,14 +6,20 @@ import (
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/samredway/scrapetool/internal/api/storage"
 	"github.com/stretchr/testify/assert"
 )
+
+// Mock email writer does nothing
+type MockEmailWriter struct{}
+
+func (w *MockEmailWriter) Write(email string) error {
+	return nil
+}
 
 func TestSendEmail(t *testing.T) {
 	// setup app (done only once)
 	app := fiber.New()
-	app.Post("/email", SendEmail(storage.NewFileEmailWriter()))
+	app.Post("/email", SendEmail(&MockEmailWriter{}))
 
 	tests := []struct {
 		name       string
