@@ -15,3 +15,15 @@ export async function scrapeUrl(url, prompt, responseStructure) {
     const data = await response.json();
     return data.results;
 }
+
+export async function sendEmail(email) {
+    const response = await fetch('/api/v1/email', {
+        method: 'POST',
+        body: JSON.stringify({ email })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(`${error["error"]}`);
+    }
+}

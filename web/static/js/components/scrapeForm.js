@@ -1,4 +1,4 @@
-import { scrapeUrl } from './apiService.js';
+import { scrapeUrl } from '../services/apiService.js';
 
 const defaultResponseStructure = `{
     "type": "object",
