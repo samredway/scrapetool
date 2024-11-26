@@ -1,5 +1,17 @@
 import { scrapeUrl } from './apiService.js';
 
+const defaultResponseStructure = `{
+    "type": "object",
+    "properties": {
+        "data": {
+            "type": "array",
+            "items": {"type": "string"}
+        }
+    },
+    "additionalProperties": false,
+    "required": ["data"]
+}`;
+
 export class ScrapeForm {
     constructor() {
         this.form = document.getElementById('scrapeForm');
@@ -7,7 +19,7 @@ export class ScrapeForm {
         this.responseStructureSection = document.getElementById('responseStructureSection');
         this.specifyResponseStructureCheckbox = document.getElementById('specifyResponseStructure');
         this.responseStructureInput = document.querySelector('textarea[name="responseStructure"]');
-        
+        this.responseStructureInput.value = defaultResponseStructure;
         this.bindEvents();
     }
 
@@ -38,6 +50,7 @@ export class ScrapeForm {
             this.responseStructureSection.style.display = 'block';
         } else {
             this.responseStructureSection.style.display = 'none';
+            this.responseStructureInput.value = defaultResponseStructure;
         }
     }
 
