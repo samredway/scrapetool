@@ -19,6 +19,9 @@ export async function scrapeUrl(url, prompt, responseStructure) {
 export async function sendEmail(email) {
     const response = await fetch('/api/v1/email', {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email })
     });
 
