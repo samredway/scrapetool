@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/handlers"
+	"github.com/samredway/scrapetool/internal/api/storage"
 )
 
 func SetupRoutes(app *fiber.App) {
@@ -14,6 +15,6 @@ func SetupRoutes(app *fiber.App) {
 
 	// api endpoints
 	api := app.Group("/api/v1")
-	api.Post("/scrape", handlers.NewScrapeHandler(scrapeai.Scrape).Scrape)
-	api.Post("/email", handlers.SendEmail)
+	api.Post("/scrape", handlers.Scrape(scrapeai.Scrape))
+	api.Post("/email", handlers.SendEmail(storage.NewFileEmailWriter()))
 }

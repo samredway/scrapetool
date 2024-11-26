@@ -18,14 +18,11 @@ func TestHandleScrape(t *testing.T) {
 		}, nil
 	}
 
-	// Create a new handler with the mock function
-	handler := NewScrapeHandler(mockScrape)
-
 	// Create a new fiber app for testing
 	app := fiber.New()
 
 	// Setup the route with the handler method
-	app.Post("/scrape", handler.Scrape)
+	app.Post("/scrape", Scrape(mockScrape))
 
 	tests := []struct {
 		name       string
