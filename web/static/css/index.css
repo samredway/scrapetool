@@ -54,3 +54,10 @@ html body div.container {
     background-color: #0b5ed7;
     border-color: #0a58ca;
 }
+
+textarea[name="responseStructure"] {
+    overflow: auto;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    font-family: monaco, monospace;
+}

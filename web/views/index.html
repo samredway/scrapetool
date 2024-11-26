@@ -29,7 +29,7 @@
               <input type="text" name="url" placeholder="https://example.com" class="form-control">
             </div>
             <div class="mb-3">
-              <textarea name="prompt" placeholder="Example: Extract all the text from the body of the page"
+              <textarea name="prompt" placeholder="Example: extract all the text from the body of the page"
                 class="form-control" rows="4"></textarea>
             </div>
 
@@ -41,20 +41,17 @@
 
             <div class="mb-3" id="responseStructureSection" style="display: none;">
               <p>
-                Advanced users can specify a JSON string to define the response structure.
-                For example the default response (shown below) is an array of strings.
+                Advanced users can specify a JSON string to adjust the response structure.
+                The default response (below) is a data object containing an array of strings.
               </p>
               <p>
-                This tool uses github.com/samredway/scrapeai under the hood.
-                For more information on the response structure, see the
-                docs here: <a href="https://github.com/samredway/scrapeai">ScrapeAi</a>
+                This tool uses the opensource <a href="https://github.com/samredway/scrapeai">ScrapeAi</a> library under
+                the hood.
+                For more information on how to adjust the response structure, see the <a
+                  href="https://github.com/samredway/scrapeai/blob/main/README.md">README</a>
               </p>
-              <pre class="bg-light p-2 rounded">
-
-                            </pre>
-              <textarea name="responseStructure" class="form-control" rows="12" spellcheck="false" data-language="json"
-                onkeydown="handleTab(event)"
-                style="overflow: auto; tab-size: 4; -moz-tab-size: 4; font-family: monaco, monospace;">{
+              <pre class="bg-light p-2 rounded"></pre>
+              <textarea name="responseStructure" class="form-control" rows="12" spellcheck="false" data-language="json">{
     "type": "object",
     "properties": {
         "data": {
