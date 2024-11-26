@@ -15,5 +15,6 @@ export class EmailForm {
         const formData = new FormData(this.form);
         const email = formData.get('email')?.trim();
         await sendEmail(email);
+        this.form.reset();
     }
 }

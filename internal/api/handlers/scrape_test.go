@@ -55,14 +55,14 @@ func TestHandleScrape(t *testing.T) {
 			req.Header.Set("Content-Type", "application/json")
 			resp, err := app.Test(req)
 			if err != nil {
-				t.Errorf("Error getting response %v", err)
+				t.Fatalf("Error getting response %v", err)
 			}
 			body, err := io.ReadAll(resp.Body)
 			if err != nil {
-				t.Errorf("Error reading response body")
+				t.Fatalf("Error reading response body")
 			}
 			if tt.statusCode != resp.StatusCode {
-				t.Errorf("Incorrect status returned %v : %s", resp.StatusCode, body)
+				t.Fatalf("Incorrect status returned %v : %s", resp.StatusCode, body)
 			}
 		})
 	}

@@ -3,15 +3,10 @@ package handlers
 import (
 	"log/slog"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/samredway/scrapeai/scrapeai"
 	"github.com/samredway/scrapetool/internal/api/types"
 )
-
-// TODO doesnt really belong here. Should I have a validate package or is
-// this a dependency?
-var validate = validator.New()
 
 // ScrapeFunc is a function that scrapes a URL and returns a ScrapeAiResult
 type ScrapeFunc func(*scrapeai.ScrapeAiRequest) (*scrapeai.ScrapeAiResult, error)
@@ -30,9 +25,11 @@ func NewScrapeHandler(scrapeFunc ScrapeFunc) *ScrapeHandler {
 
 // Scrape calles underlying scrapeai Scrape function to collect return data
 func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
-	req, err := h.parseAndValidateRequest(c)
+	req, err := parseAndValidateRequest[types.ScrapeRequest](c)
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": err.Error(),
+		})
 	}
 
 	saReq, err := scrapeai.NewScrapeAiRequest(
@@ -60,23 +57,4 @@ func (h *ScrapeHandler) Scrape(c *fiber.Ctx) error {
 		Prompt:  req.Prompt,
 		Results: result.Results,
 	})
-}
-
-func (h *ScrapeHandler) parseAndValidateRequest(c *fiber.Ctx) (types.ScrapeRequest, error) {
-	var req types.ScrapeRequest
-
-	if err := c.BodyParser(&req); err != nil {
-		return req, c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": "Invalid request format",
-		})
-	}
-
-	if err := validate.Struct(req); err != nil {
-		slog.Error("Invalid request", "error", err.Error())
-		return req, c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
-		})
-	}
-
-	return req, nil
 }
