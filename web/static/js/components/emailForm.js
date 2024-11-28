@@ -14,7 +14,32 @@ export class EmailForm {
         e.preventDefault();
         const formData = new FormData(this.form);
         const email = formData.get('email')?.trim();
-        await sendEmail(email);
-        this.form.reset();
+        
+        try {
+            await sendEmail(email);
+            this.form.reset();
+            this.showSuccess();
+        } catch (error) {
+            console.error('Failed to register email:', error);
+        }
+    }
+
+    showSuccess() {
+        // Remove any existing success message
+        const existingSuccess = this.form.querySelector('.alert-success');
+        if (existingSuccess) {
+            existingSuccess.remove();
+        }
+
+        // Create and show new success message
+        const successDiv = document.createElement('div');
+        successDiv.className = 'alert alert-success mt-3';
+        successDiv.textContent = 'Thanks! We\'ll keep you updated about early access and launch details.';
+        this.form.appendChild(successDiv);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+            successDiv.remove();
+        }, 5000);
     }
 }
