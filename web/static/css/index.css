@@ -1,63 +1,58 @@
-/* More specific selector to override Bootstrap */
-html body .container,
-html body div.container {
-    max-width: 1000px !important;
-    margin: 2rem auto !important;
-    width: 100% !important;
-}
+/* Landing page specific styles */
 
-/* Common styling for all form containers */
-.form-container,
-.email-signup-container {
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 1.5rem;
+/* Hero section styling */
+.hero-button {
+    padding: 2rem 4rem !important;
+    margin-top: 3rem;
     margin-bottom: 2rem;
-    background-color: #f8f9fa;
+    font-size: 1.5rem !important;
+    font-weight: 500;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
 }
 
-/* Results container */
-.results-container {
-    width: 100%;
-    padding: 0;
+.hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
 }
 
-.card-body {
-    width: 100%;
-    min-width: 100%;
+.hero-button i {
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
-/* Results display */
-#scrapeResult {
-    max-height: 500px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-    border: 1px solid #dee2e6;
-    padding: 1rem !important;
-    margin: 0;
+/* Features grid styling */
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--bs-primary);
 }
 
-/* Common styling for both buttons */
-#scrapeForm button,
-#emailForm button {
-    padding: 0.4rem 1rem;
-    font-size: 1.1rem;
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    height: 40px;
-    white-space: nowrap;
+/* How It Works section */
+.comparison-list {
+    list-style-type: none;
+    padding-left: 0;
 }
 
-/* Optional hover state for both buttons */
-#scrapeForm button:hover,
-#emailForm button:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
+.comparison-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
 
-textarea[name="responseStructure"] {
-    overflow: auto;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    font-family: monaco, monospace;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .hero-button {
+        width: 100%;
+        /* Full width on mobile */
+        margin-top: 1rem;
+    }
 }

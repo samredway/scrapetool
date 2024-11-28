@@ -12,6 +12,9 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{})
 	})
+	app.Get("/demo", func(c *fiber.Ctx) error {
+		return c.Render("demo", fiber.Map{})
+	})
 
 	// api endpoints
 	api := app.Group("/api/v1")

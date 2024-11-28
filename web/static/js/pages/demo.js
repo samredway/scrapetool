@@ -1,5 +1,5 @@
-import { EmailForm } from './components/emailForm.js';
-import { ScrapeForm } from './components/scrapeForm.js';
+import { EmailForm } from '../components/emailForm.js';
+import { ScrapeForm } from '../components/scrapeForm.js';
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
